@@ -54,6 +54,7 @@ jobs:
           cp dist/dyname/index.html dist/index.html
           grep -rIl '/dyname/' dist --include=*.html --include=*.js --include=*.webmanifest --include=*.json | grep -v '^dist/dyname/' | xargs -r sed -i 's#/dyname/#/#g'
           sed -i 's#https://spywell.in/dyname/#https://livecard.in/#g; s#https://spywell.in/dyname/og.jpg#https://livecard.in/dyname/og.jpg#g' dist/index.html
+          rm -rf dist/dyname
           echo "livecard.in" > dist/CNAME
           printf 'User-agent: *\nAllow: /\n' > dist/robots.txt
           rm -f dist/sitemap.xml
