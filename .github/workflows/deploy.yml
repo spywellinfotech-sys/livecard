@@ -48,9 +48,11 @@ jobs:
           npm install --no-save playwright
           npx playwright install --with-deps chromium
           node scripts/make-og-shots.cjs
-      - name: livecard.in home = DynaMe page
+      - name: livecard.in home page
         run: |
+          cp -r dist/dyname/. dist/
           cp dist/dyname/index.html dist/index.html
+          grep -rIl '/dyname/' dist --include=*.html --include=*.js --include=*.webmanifest --include=*.json | grep -v '^dist/dyname/' | xargs -r sed -i 's#/dyname/#/#g'
           sed -i 's#https://spywell.in/dyname/#https://livecard.in/#g; s#https://spywell.in/dyname/og.jpg#https://livecard.in/dyname/og.jpg#g' dist/index.html
           echo "livecard.in" > dist/CNAME
           printf 'User-agent: *\nAllow: /\n' > dist/robots.txt
