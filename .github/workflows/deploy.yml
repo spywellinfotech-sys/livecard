@@ -55,6 +55,14 @@ jobs:
           grep -rIl '/dyname/' dist --include=*.html --include=*.js --include=*.webmanifest --include=*.json | grep -v '^dist/dyname/' | xargs -r sed -i 's#/dyname/#/#g'
           sed -i 's#https://spywell.in/dyname/#https://livecard.in/#g; s#https://spywell.in/dyname/og.jpg#https://livecard.in/dyname/og.jpg#g' dist/index.html
           rm -rf dist/dyname
+          python3 - <<'PY'
+          import re
+          h=open('dist/404.html',encoding='utf8').read()
+          m=re.search(r'<head[^>]*>(<script>.*?</script>)',h,re.S)
+          rd=m.group(1) if m else ''
+          page='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'+rd+'<title>Page not found | LiveCard</title><meta name="robots" content="noindex"><link rel="icon" href="/logo.png"><style>body{margin:0;font:16px system-ui,sans-serif;background:#fff;color:#1a1a1a;text-align:center}header{background:#ED1C24;padding:12px;color:#fff;font-weight:800;font-size:20px}h1{font-size:90px;margin:70px 0 0;color:#ED1C24}p{color:#666}a{display:inline-block;margin-top:18px;background:#ED1C24;color:#fff;text-decoration:none;font-weight:800;padding:12px 28px;border-radius:999px}</style></head><body><header>LiveCard</header><h1>404</h1><h2>Page not found</h2><p>The page you are looking for does not exist or has moved.</p><a href="/">Back to home</a></body></html>'
+          open('dist/404.html','w',encoding='utf8').write(page)
+          PY
           echo "livecard.in" > dist/CNAME
           printf 'User-agent: *\nAllow: /\n' > dist/robots.txt
           rm -f dist/sitemap.xml
