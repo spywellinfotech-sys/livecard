@@ -64,8 +64,7 @@ jobs:
           open('dist/404.html','w',encoding='utf8').write(page)
           PY
           echo "livecard.in" > dist/CNAME
-          printf 'User-agent: *\nAllow: /\n' > dist/robots.txt
-          rm -f dist/sitemap.xml
+          [ -f dist/robots.txt ] || printf 'User-agent: *\nAllow: /\n' > dist/robots.txt
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
