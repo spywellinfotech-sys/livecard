@@ -39,6 +39,11 @@ jobs:
         env:
           SITE_ORIGIN: https://livecard.in
         run: node scripts/make-og-pages.cjs
+      - name: Company site link previews
+        continue-on-error: true
+        env:
+          SITE_ORIGIN: https://livecard.in
+        run: node scripts/make-og-corp.cjs
       - name: Card screenshots for link previews
         continue-on-error: true
         timeout-minutes: 6
